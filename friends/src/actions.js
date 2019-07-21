@@ -14,6 +14,14 @@ export const ADD_FRIEND_START = 'ADD_FRIEND_START'
 export const ADD_FRIEND_SUCCESS = 'ADD_FRIEND_SUCCESS'
 export const ADD_FRIEND_FAILED = 'ADD_FRIEND_FAILED'
 
+export const EDIT_FRIEND_START = 'EDIT_FRIEND_START'
+export const EDIT_FRIEND_SUCCESS = 'EDIT_FRIEND_SUCCESS'
+export const EDIT_FRIEND_FAILED = 'EDIT_FRIEND_FAILED'
+
+export const DELETE_FRIEND_START = 'DELETE_FRIEND_START'
+export const DELETE_FRIEND_SUCCESS = 'DELETE_FRIEND_SUCCESS'
+export const DELETE_FRIEND_FAILED = 'DELETE_FRIEND_FAILED'
+
 // action creators
 
 export function getFriends() {
@@ -52,7 +60,6 @@ export function login(username, password) {
 }
 
 export function addFriend(friend) {
-    console.log("ADD FRIEND", friend)
     return (dispatch) => {
         dispatch({ type: ADD_FRIEND_START })
         const headers = {
@@ -63,8 +70,44 @@ export function addFriend(friend) {
                 dispatch({ type: ADD_FRIEND_SUCCESS, payload: friend })
             })
             .catch((error) => {
-                console.log("ERROR", error)
+                console.log("Error: Adding Friend", error)
                 dispatch({ type: ADD_FRIEND_FAILED, payload: error })
             })
     }
+}
+
+export function editFriend(friend) {
+    return (dispatch) => {
+        dispatch({ type: EDIT_FRIEND_START })
+        const headers = {
+            authorization: localStorage.getItem('token')
+        }
+        return axios.put(`http://localhost:5000/api/friends/${friend.id}`, friend, { headers })
+            .then((res) => {
+                dispatch({ type: EDIT_FRIEND_SUCCESS, payload: res })
+            })
+            .catch((error) => {
+                console.log('Error: Editing Friend')
+                dispatch({ type: EDIT_FRIEND_FAILED, payload: error })
+            })
+    }
+}
+
+export function deleteFriend(id) {
+    console.log("delete friend ID", id)
+    return (dispatch) => {
+        dispatch({ type: DELETE_FRIEND_START })
+        const headers = {
+            authorization: localStorage.getItem('token')
+        }
+        return axios.delete(`http://localhost:5000/api/friends/${id}`, { headers })
+            .then((res) => {
+                dispatch({ type: DELETE_FRIEND_SUCCESS, payload: res })
+            })
+            .catch((error) => {
+                console.log("Error: Deleting Friend", error)
+                dispatch({ type: DELETE_FRIEND_FAILED, payload: error })
+            })
+    }
+    
 }

@@ -1,32 +1,71 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Table } from 'reactstrap'
+import FriendItem from './FriendItem'
+import { editFriend, getFriends, deleteFriend } from '../actions'
 
 function ListFriends(props) {
     const {
         gettingFriends,
         errorMessage,
         friends,
+        editingFriend,
+        deletingFriend,
     } = props
 
 
     if (gettingFriends) {
-        return <div class="spinner"></div>
+        return <div className="spinner"></div>
     }
 
     if (errorMessage) {
         return <p>Error retreiving friends: {props.errorMessage}</p>
     }
 
+    if (editingFriend) {
+        return <div className="spinner"></div>
+    }
+
+    if (deletingFriend) {
+        return <div className="spinner"></div>
+    }
+
+    function doEditFriend(id, field, value) {
+                
+        // -- Another method to get and update the friend object to update -- WORKS
+        let friendToUpdate = {} 
+        friends.forEach(friend => { // forEach used but not editing original array
+            if (friend.id === parseInt(id)) {
+                friendToUpdate = friend
+            }
+        })        
+        friendToUpdate[field] = value
+
+        props.editFriend(friendToUpdate)
+            // .then(props.getFriends)
+            // .catch((error) => {
+            //     console.log("Error when reloading after edit", error)
+            // })
+
+    }
+
+    function doDeleteFriend(event) {
+        event.preventDefault()
+        const id = event.target.id
+        props.deleteFriend(id)
+    }
+
     return (
+        // Display React table of friends
         <div>
             <Table>
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Email</th>
+                    <tr className="column-headers">    
+                        <th className="row-count-header" >#</th>
+                        <th className="name-header">Name</th>
+                        <th className="age-header">Age</th>
+                        <th className="email-header">Email</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,11 +73,13 @@ function ListFriends(props) {
                         return( 
                             <tr>
                                 <th scope="row">{index + 1}</th>
-                                <td>{friend.name}</td>
-                                <td>{friend.age}</td>
-                                <td>{friend.email}</td>
-                                <td>Edit</td>
-                                <td>Remove</td>
+                                <td className="name-field"><FriendItem doEditFriend={doEditFriend} friend_id={friend.id} field_name="name" value={friend.name}/></td>
+                                <td className="age-field"><FriendItem doEditFriend={doEditFriend} friend_id={friend.id} field_name="age" value={friend.age}/></td>
+                                <td className="email-field"><FriendItem doEditFriend={doEditFriend} friend_id={friend.id} field_name="email" value={friend.email}/></td>
+                                <td><img
+                                    id={friend.id}
+                                    onClick={doDeleteFriend}
+                                    src="https://img.icons8.com/material-sharp/24/000000/delete-forever.png"/></td>
                             </tr>
                         )                   
                     })}
@@ -49,6 +90,12 @@ function ListFriends(props) {
     )
 }
 
+const mapDispatchToProps = {
+    editFriend: editFriend,
+    getFriends: getFriends,
+    deleteFriend: deleteFriend,
+}
+
 const mapStateToProps = (state) => {
     return {
         gettingFriends: state.gettingFriends,
@@ -57,4 +104,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(ListFriends)
+export default connect(mapStateToProps, mapDispatchToProps)(ListFriends)

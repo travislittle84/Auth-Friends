@@ -23,7 +23,6 @@ class App extends React.Component {
         return (
 			<>
                 <AppMenu logout={this.logout}/>
-				{/* <Button type="button" id="logout-button" onClick={this.logout}>Logout</Button> */}
                 <ListFriends />	
 				<AddFriend />		
 			</>

@@ -59,7 +59,7 @@ class AddFriend extends React.Component {
                     </FormGroup>
                     <FormGroup check row>
                         <Col sm={{ size: 10, offset: 2 }}>
-                            <Button type="submit" color="primary">Add Friend</Button>
+                            <Button type="submit" color="danger" >Add Friend</Button>
                         </Col>
                     </FormGroup>               
                 </Form>
