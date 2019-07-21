@@ -1,33 +1,68 @@
-.App {
-  text-align: center;
+h3 {
+  padding: 12px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.app {
+  width: 95%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app-menu {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.app-menu #logout-button {
+  align-self: center;
+  margin: 0 3px;
+  
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.friend-deck {
+  display: flex;
+  justify-content: space-around;
+}
+
+
+
+#friend-card {
+  width: 250px;
+  max-width: 250px;
+  min-width: 250px;
+  margin: 3px 6px;
+  padding: 6px 6px;  
+}
+
+#friend-card .card-title  {
+  font-size: 24px;
+}
+
+.spinner {
+  border: 9px solid #272727; 
+  border-top: 9px solid #747474; 
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.add-friend-form {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 12px;
+}
+
+.add-friend-form-container {
+  margin: 0 auto;
+  width: 80%;
+  display: block;
+  
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
 }

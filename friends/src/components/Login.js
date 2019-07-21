@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { login } from '../actions'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 class Login extends React.Component {
 	constructor() {
@@ -29,32 +30,45 @@ class Login extends React.Component {
 			.then(() => {
 				this.props.history.push("/")
 			})
-			.catch((err) => {
-				console.error(err)
+			.catch((error) => {
+				console.error(error)
 			})
 	}
 
 	render() {
 		const { username, password } = this.state
-		const { isLoading, errorMessage } = this.props
+        const { loggingIn, errorMessage } = this.props
+        
+        if (errorMessage) {
+            return <p className="error">{errorMessage}</p>
+        }
 
 		return (
-			<form onSubmit={this.handleSubmit}>
-				{errorMessage && <p className="error">{errorMessage}</p>}
-				
-				<input type="text" name="username" placeholder="Username" value={username} onChange={this.handleChange} /><br />
-				<input type="password" name="password" placeholder="Password" value={password} onChange={this.handleChange} /><br />
-
-				{isLoading
-					? <p>Logging in...</p>
-					: <button type="submit">Login</button>}
-			</form>
+            <div>
+                <h3>Lambda Friends</h3>
+                <Form inline onSubmit={this.handleSubmit}>
+                    <FormGroup>                    
+                        <Label for="username" className="mr-sm-2">Username</Label>
+                        <Input type="text" name="username" placeholder="Username" value={username} onChange={this.handleChange} />
+                        </FormGroup>
+                    <FormGroup>
+                        <Label for="password" className="mr-sm-2">Password</Label>
+                        <Input type="password" name="password" placeholder="Password" value={password} onChange={this.handleChange} />
+                    </FormGroup>
+                        {loggingIn
+                            ? <div class="spinner"></div> 
+                            : <Button type="submit" color="primary">Login</Button>}
+                    
+			    </Form>
+            </div>
+			
 		)
 	}
 }
 
 const mapStateToProps = (state) => ({
-	isLoading: state.isLoading,
+    isLoading: state.isLoading,
+    loggingIn: state.loggingIn,
 	errorMessage: state.errorMessage,
 })
 

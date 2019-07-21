@@ -1,21 +1,24 @@
 import {
-	// MAKE_DEPOSIT,
-	// MAKE_WITHDRAWAL,
-	// GET_ACCOUNT_START,
-	// GET_ACCOUNT_SUCCESS,
-	// GET_ACCOUNT_FAILED,
+	GET_FRIENDS_START,
+	GET_FRIENDS_SUCCESS,
+	GET_FRIENDS_FAILED,
 	LOGIN_START,
 	LOGIN_SUCCESS,
 	LOGIN_FAILED,
+    ADD_FRIEND_SUCCESS,
+    ADD_FRIEND_FAILED,
+    ADD_FRIEND_START,
 } from './actions'
 
 // all state values need an initial value
 const initialState = {
-	isLoading: false,
-	errorMessage: null,
-	// checking: 0,
-	// savings: 0,
-	// accountActivity: [],
+    // isLoading: false,
+    loggingIn: false,
+    errorMessage: null,
+    gettingFriends: false,
+    friends: [],
+    updatingFriend: false,
+    deleteingFriend: false,
 }
 
 export default function(state = initialState, action) {
@@ -49,47 +52,69 @@ export default function(state = initialState, action) {
 		// 		accountActivity: newActivity,
 		// 	}
 		// }
-		// case GET_ACCOUNT_START: {
-		// 	return {
-		// 		...state,
-		// 		isLoading: true,
-		// 	}
-		// }
-		// case GET_ACCOUNT_SUCCESS: {
-		// 	const { checking, savings, accountActivity } = action.payload
-		// 	return {
-		// 		...state,
-		// 		isLoading: false,
-		// 		errorMessage: null,
-		// 		checking,
-		// 		savings,
-		// 		accountActivity,
-		// 	}
-		// }
-		// case GET_ACCOUNT_FAILED: {
-		// 	return {
-		// 		...state,
-		// 		isLoading: false,
-		// 		errorMessage: action.payload.message,
-		// 	}
-		// }
+		case GET_FRIENDS_START: {
+			return {
+				...state,
+                gettingFriends: true,
+                errorMessage: null,
+			}
+		}
+		case GET_FRIENDS_SUCCESS: {
+			const friends = action.payload
+            return {
+				...state,
+                gettingFriends: false,
+				errorMessage: null,
+				friends
+			}
+		}
+		case GET_FRIENDS_FAILED: {
+			return {
+				...state,
+                gettingFriends: false,
+				errorMessage: action.payload.message,
+			}
+        }
+        case ADD_FRIEND_SUCCESS: {
+            const newFriend = action.payload
+            const newList = state.friends.concat(newFriend)
+            return {
+                ...state,
+                addingFriends: false,
+                errorMessage: null,
+                friends: newList                
+            }
+        }
+        case ADD_FRIEND_FAILED: {
+            return {
+                ...state,
+                addingFriends: false,
+                errorMessage: action.payload
+            }
+        }
+        case ADD_FRIEND_START: {
+            return {
+                ...state,
+                addingFriend: true,
+            }
+        }
 		case LOGIN_START: {
 			return {
 				...state,
-				isLoading: true,
+                loggingIn: true,
 			}
 		}
 		case LOGIN_SUCCESS: {
 			return {
 				...state,
-				isLoading: false,
+                loggingIn: false,
 				errorMessage: null,
 			}
 		}
 		case LOGIN_FAILED: {
 			return {
 				...state,
-				isLoading: false,
+                loggingIn: false,
 				errorMessage: action.payload.message,
 			}
 		}

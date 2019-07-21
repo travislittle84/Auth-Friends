@@ -1,11 +1,14 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-
+import { getFriends } from '../actions'
+import { Button } from 'reactstrap'
+import ListFriends from './ListFriends';
+import AddFriend from './AddFriend'
+import AppMenu from './AppMenu'
 
 class App extends React.Component {
-	componentDidMount() {
-		// get stuff
+	componentDidMount() {		
 	}
 
 	logout = (evt) => {
@@ -16,16 +19,20 @@ class App extends React.Component {
 	}
 
 	render() {
-		return (
-			<div>
-				<button type="button" onClick={this.logout}>Logout</button>
-			</div>
+        this.props.getFriends()
+        return (
+			<>
+                <AppMenu logout={this.logout}/>
+				{/* <Button type="button" id="logout-button" onClick={this.logout}>Logout</Button> */}
+                <ListFriends />	
+				<AddFriend />		
+			</>
 		)
 	}
 }
 
 const mapDispatchToProps = {
-	// getStuff,
+	getFriends,
 }
 
 export default withRouter(

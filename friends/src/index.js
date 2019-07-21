@@ -6,13 +6,13 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import App from './App'
 import reducer from './reducer'
+//bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const logger = (store) => (next) => (action) => {
 	console.log('Prev State', store.getState())
-	console.log('Action', action)
-	
+	console.log('Action', action)	
 	next(action)
-
 	console.log('New State', store.getState())
 }
 
