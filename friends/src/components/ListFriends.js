@@ -32,8 +32,7 @@ function ListFriends(props) {
 
     function doEditFriend(id, field, value) {
                 
-        // -- Another method to get and update the friend object to update -- WORKS
-        let friendToUpdate = {} 
+                let friendToUpdate = {} 
         friends.forEach(friend => { // forEach used but not editing original array
             if (friend.id === parseInt(id)) {
                 friendToUpdate = friend
@@ -42,11 +41,6 @@ function ListFriends(props) {
         friendToUpdate[field] = value
 
         props.editFriend(friendToUpdate)
-            // .then(props.getFriends)
-            // .catch((error) => {
-            //     console.log("Error when reloading after edit", error)
-            // })
-
     }
 
     function doDeleteFriend(event) {
@@ -73,10 +67,12 @@ function ListFriends(props) {
                         return( 
                             <tr>
                                 <th scope="row">{index + 1}</th>
-                                <td className="name-field"><FriendItem doEditFriend={doEditFriend} friend_id={friend.id} field_name="name" value={friend.name}/></td>
-                                <td className="age-field"><FriendItem doEditFriend={doEditFriend} friend_id={friend.id} field_name="age" value={friend.age}/></td>
-                                <td className="email-field"><FriendItem doEditFriend={doEditFriend} friend_id={friend.id} field_name="email" value={friend.email}/></td>
+                                <td className="name-field"><FriendItem doEditFriend={doEditFriend} friend_id={friend.id} key={friend.id} field_name="name" value={friend.name}/></td>
+                                <td className="age-field"><FriendItem key={friend.id} doEditFriend={doEditFriend} friend_id={friend.id} field_name="age" value={friend.age}/></td>
+                                <td className="email-field"><FriendItem key={friend.id} doEditFriend={doEditFriend} friend_id={friend.id} field_name="email" value={friend.email}/></td>
                                 <td><img
+                                    alt={`delete ${friend.name}`}
+                                    key={friend.id}
                                     id={friend.id}
                                     onClick={doDeleteFriend}
                                     src="https://img.icons8.com/material-sharp/24/000000/delete-forever.png"/></td>

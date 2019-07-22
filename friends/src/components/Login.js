@@ -56,7 +56,7 @@ class Login extends React.Component {
                         <Input type="password" name="password" placeholder="Password" value={password} onChange={this.handleChange} />
                     </FormGroup>
                         {loggingIn
-                            ? <div class="spinner"></div> 
+                            ? <div className="spinner"></div> 
                             : <Button type="submit" color="primary">Login</Button>}
                     
 			    </Form>

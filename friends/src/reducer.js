@@ -18,7 +18,6 @@ import {
 
 // all state values need an initial value
 const initialState = {
-    // isLoading: false,
     loggingIn: false,
     errorMessage: null,
     gettingFriends: false,
@@ -125,7 +124,6 @@ export default function(state = initialState, action) {
             }
         case DELETE_FRIEND_SUCCESS:
             const newList_fromDelete = action.payload.data           
-            // state.friends.concat(newFriend)
             return {
                 ...state,
                 errorMessage: null,

@@ -2,7 +2,6 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getFriends } from '../actions'
-import { Button } from 'reactstrap'
 import ListFriends from './ListFriends';
 import AddFriend from './AddFriend'
 import AppMenu from './AppMenu'
